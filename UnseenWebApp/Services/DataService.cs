@@ -5,16 +5,10 @@ using UnseenWebApp.Models;
 
 namespace UnseenWebApp.Services;
 
-public class DataService
+public class DataService(UnseenWebAppDbContext dbContext, ILogger<DataService> logger)
 {
-    private readonly UnseenWebAppDbContext _dbContext;
-    private readonly ILogger<DataService> _logger;
-
-    public DataService(UnseenWebAppDbContext dbContext, ILogger<DataService> logger)
-    {
-        _dbContext = dbContext ?? throw new ArgumentNullException(nameof(dbContext));
-        _logger = logger ?? throw new ArgumentNullException(nameof(logger));
-    }
+    private readonly UnseenWebAppDbContext _dbContext = dbContext ?? throw new ArgumentNullException(nameof(dbContext));
+    private readonly ILogger<DataService> _logger = logger ?? throw new ArgumentNullException(nameof(logger));
 
     private static ImmutableList<Range> FindCandidateWords(ReadOnlySpan<char> inputSpan)
     {

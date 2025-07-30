@@ -1,7 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using System.ComponentModel.DataAnnotations;
-using System.Threading.Tasks;
 using UnseenWebApp.Models;
 using UnseenWebApp.Services;
 
@@ -27,11 +26,6 @@ public class IndexModel : PageModel
 
     [TempData]
     public bool IsSuccess { get; set; }
-
-    public void OnGet()
-    {
-        // Initialize the page
-    }
 
     public async Task<IActionResult> OnPost()
     {
