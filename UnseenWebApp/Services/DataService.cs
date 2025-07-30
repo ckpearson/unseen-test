@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Immutable;
 using Microsoft.EntityFrameworkCore;
 using UnseenWebApp.Data;
@@ -162,7 +161,7 @@ public class DataService
         var entity = new TopScoreUniqueStringEntity
         {
             Word = chosenWord,
-            SubmittedAtUtc = DateTimeOffset.UtcNow
+            SubmittedAtUtc = DateTime.UtcNow
         };
 
         _dbContext.TopScoreUniqueStrings.Add(entity);
@@ -185,5 +184,34 @@ public class DataService
             Input = input,
             Value = chosenWord
         };
+    }
+
+    public async Task<(IEnumerable<TopScoreUniqueStringEntity> Items, int TotalCount)> SearchWordsAsync(
+        string? searchTerm = null,
+        int page = 1,
+        int pageSize = 10)
+    {
+        var query = _dbContext.TopScoreUniqueStrings.AsQueryable();
+
+        // Apply search filter if provided
+        if (!string.IsNullOrWhiteSpace(searchTerm))
+        {
+            var lowerSearchTerm = searchTerm.ToLower();
+#pragma warning disable CA1862 // Use the 'StringComparison' method overloads to perform case-insensitive string comparisons
+            query = query.Where(w => w.Word.ToLower().Contains(lowerSearchTerm));
+#pragma warning restore CA1862 // Use the 'StringComparison' method overloads to perform case-insensitive string comparisons
+        }
+
+        // Get total count for pagination
+        var totalCount = await query.CountAsync();
+
+        // Apply pagination and ordering
+        var items = await query
+            .OrderByDescending(w => w.SubmittedAtUtc)
+            .Skip((page - 1) * pageSize)
+            .Take(pageSize)
+            .ToListAsync();
+
+        return (items, totalCount);
     }
 }

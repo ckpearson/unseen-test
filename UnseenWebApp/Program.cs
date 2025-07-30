@@ -25,6 +25,13 @@ else
     app.UseDeveloperExceptionPage();
 }
 
+// Ensure the database is created and migrations are applied
+using (var scope = app.Services.CreateScope())
+{
+    var dbContext = scope.ServiceProvider.GetRequiredService<UnseenWebAppDbContext>();
+    dbContext.Database.Migrate();
+}
+
 app.UseHttpsRedirection();
 
 app.UseRouting();

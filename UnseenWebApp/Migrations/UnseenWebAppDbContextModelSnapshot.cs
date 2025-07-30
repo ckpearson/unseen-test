@@ -23,7 +23,7 @@ namespace UnseenWebApp.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
-                    b.Property<DateTimeOffset>("SubmittedAtUtc")
+                    b.Property<DateTime>("SubmittedAtUtc")
                         .HasColumnType("TEXT");
 
                     b.Property<string>("Word")

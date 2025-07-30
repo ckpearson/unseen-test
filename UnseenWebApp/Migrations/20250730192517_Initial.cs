@@ -18,7 +18,7 @@ namespace UnseenWebApp.Migrations
                     Id = table.Column<int>(type: "INTEGER", nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
                     Word = table.Column<string>(type: "TEXT", nullable: false),
-                    SubmittedAtUtc = table.Column<DateTimeOffset>(type: "TEXT", nullable: false)
+                    SubmittedAtUtc = table.Column<DateTime>(type: "TEXT", nullable: false)
                 },
                 constraints: table =>
                 {

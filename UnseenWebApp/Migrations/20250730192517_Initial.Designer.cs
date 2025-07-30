@@ -11,7 +11,7 @@ using UnseenWebApp.Data;
 namespace UnseenWebApp.Migrations
 {
     [DbContext(typeof(UnseenWebAppDbContext))]
-    [Migration("20250730183043_Initial")]
+    [Migration("20250730192517_Initial")]
     partial class Initial
     {
         /// <inheritdoc />
@@ -26,7 +26,7 @@ namespace UnseenWebApp.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
-                    b.Property<DateTimeOffset>("SubmittedAtUtc")
+                    b.Property<DateTime>("SubmittedAtUtc")
                         .HasColumnType("TEXT");
 
                     b.Property<string>("Word")
